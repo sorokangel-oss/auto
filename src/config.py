@@ -15,6 +15,13 @@ STORAGE_STATE_PATH = STORAGE_DIR / "naver_storage_state.json"
 
 load_dotenv(ROOT_DIR / ".env")
 
+# .env에 ANTHROPIC_API_KEY= 처럼 빈 값으로 남아있으면 os.environ에는 빈 문자열로
+# "설정된" 상태가 되어버린다. 그 상태로 두면 Anthropic SDK가 "키가 비어있음"으로
+# 판단해 ant auth login/Claude Code 구독 인증으로 넘어가지 못할 수 있으므로,
+# 비어있는 값은 아예 없는 것처럼 제거한다.
+if not os.environ.get("ANTHROPIC_API_KEY"):
+    os.environ.pop("ANTHROPIC_API_KEY", None)
+
 
 @dataclass
 class ScheduleConfig:

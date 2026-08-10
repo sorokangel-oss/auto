@@ -35,9 +35,33 @@ playwright install chromium
 
    - `NAVER_ID` / `NAVER_PW`: 네이버 로그인 정보
    - `NAVER_BLOG_ID`: `blog.naver.com/여기` 에 들어가는 아이디
-   - `ANTHROPIC_API_KEY`: [console.anthropic.com](https://console.anthropic.com)에서 발급
+   - `ANTHROPIC_API_KEY`: **기본값은 비워두세요.** 아래 "글쓰기 AI 인증" 참고
 
 2. `config.yaml`에서 포스팅 주제 목록, 발행 시각, 글 톤 등을 원하는 대로 수정합니다.
+
+### 글쓰기 AI 인증 (별도 API 요금 없이 기존 Claude 구독 재사용)
+
+이 프로그램은 기본적으로 **새 API 키를 발급받아 결제하지 않고, 이미 쓰고 있는
+Claude 구독(Pro/Max) 인증을 그대로 재사용**하도록 설정되어 있습니다.
+`.env`의 `ANTHROPIC_API_KEY`를 비워두면 Anthropic SDK가 다음 순서로 인증 정보를
+자동으로 찾습니다: `ANTHROPIC_API_KEY` → `ANTHROPIC_AUTH_TOKEN` → 터미널에
+로그인되어 있는 Claude Code / `ant auth login` 세션(구독 인증).
+
+- 이미 이 컴퓨터에서 Claude Code를 로그인해서 쓰고 있다면 **별도 설정 없이
+  그대로 동작**합니다.
+- 아직 로그인한 적이 없다면 [Anthropic CLI(`ant`)](https://github.com/anthropics/anthropic-cli)를
+  설치한 뒤 한 번만 실행하세요.
+
+  ```bash
+  ant auth login
+  ```
+
+  브라우저가 열리면 평소 쓰던 Claude 계정(구독이 연결된 계정)으로 로그인하면
+  됩니다. 이후 이 프로그램이 생성하는 글의 사용량은 API 요금이 아니라 구독
+  사용량으로 처리됩니다.
+- 반대로 **구독 대신 별도 API 결제**를 쓰고 싶다면 [console.anthropic.com](https://console.anthropic.com)에서
+  키를 발급받아 `.env`의 `ANTHROPIC_API_KEY`에 넣으면, 그 값이 항상 우선
+  사용됩니다.
 
 ## 사용법
 

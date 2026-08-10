@@ -1,4 +1,11 @@
-"""Claude API를 이용해 네이버 블로그용 글(제목/본문/태그)을 생성한다."""
+"""Claude를 이용해 네이버 블로그용 글(제목/본문/태그)을 생성한다.
+
+기본 동작은 별도 API 키 결제 없이 이미 로그인된 Claude 구독 인증을 재사용하는 것이다.
+`ANTHROPIC_API_KEY`를 지정하지 않으면 Anthropic SDK가 다음 순서로 인증 정보를 찾는다:
+ANTHROPIC_API_KEY 환경변수 -> ANTHROPIC_AUTH_TOKEN -> `ant auth login`(또는 Claude Code
+로그인)으로 저장된 OAuth 프로필. 즉 터미널에서 Claude Code/`ant`에 로그인만 되어 있으면
+이 프로그램은 별도 설정 없이 그 구독 인증을 그대로 사용한다.
+"""
 
 from __future__ import annotations
 
@@ -42,10 +49,11 @@ class GeneratedPost:
 
 
 class ContentGenerator:
-    def __init__(self, api_key: str, model: str = "claude-opus-5"):
-        if not api_key:
-            raise ValueError("ANTHROPIC_API_KEY가 설정되어 있지 않습니다.")
-        self.client = anthropic.Anthropic(api_key=api_key)
+    def __init__(self, api_key: str = "", model: str = "claude-opus-5"):
+        # api_key가 없으면 인자를 아예 넘기지 않는다. 그래야 SDK가
+        # ant auth login / Claude Code 로그인으로 저장된 구독 인증 프로필을
+        # 자동으로 찾아 쓴다(별도 API 요금이 청구되지 않음).
+        self.client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
         self.model = model
 
     def generate(self, topic: str, tone: str, min_length: int) -> GeneratedPost:
