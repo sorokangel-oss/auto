@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>네이버 블로그 자동 포스팅 프로그램</title>
+<meta name="description" content="Claude로 글을 생성하고 Playwright로 네이버 블로그에 자동 발행하는 오픈소스 프로그램" />
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #171a21;
+    --text: #e8eaed;
+    --muted: #9aa1ac;
+    --accent: #4fd1c5;
+    --border: #262a33;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+      "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+  h1 { font-size: 2rem; margin: 0 0 8px; }
+  .subtitle { color: var(--muted); margin: 0 0 40px; font-size: 1.05rem; }
+  .badges { margin-bottom: 40px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card h2 { margin-top: 0; font-size: 1.1rem; }
+  ul { margin: 0; padding-left: 20px; color: var(--muted); }
+  li { margin-bottom: 8px; }
+  code {
+    background: #0d0f13;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.9em;
+    color: var(--accent);
+  }
+  pre {
+    background: #0d0f13;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    color: var(--text);
+  }
+  a.btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 18px;
+    background: var(--accent);
+    color: #0b1114;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+  }
+  a.btn:hover { opacity: 0.9; }
+  footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>네이버 블로그 자동 포스팅 프로그램</h1>
+    <p class="subtitle">
+      Claude로 글(제목·본문·태그)을 생성하고, Playwright로 네이버 블로그에
+      자동으로 로그인·발행하는 오픈소스 파이썬 프로그램입니다.
+    </p>
+
+    <div class="badges">
+      <span class="badge">Python</span>
+      <span class="badge">Playwright</span>
+      <span class="badge">Claude API</span>
+      <span class="badge">APScheduler</span>
+    </div>
+
+    <div class="card">
+      <h2>주요 기능</h2>
+      <ul>
+        <li>주제만 입력하면 Claude가 제목·본문·태그를 생성</li>
+        <li>SmartEditor ONE을 자동 조작해 실제로 글을 발행</li>
+        <li>세션 저장으로 한 번 로그인 후 재로그인 없이 반복 사용</li>
+        <li>APScheduler로 매일 정해진 시각에 자동 발행</li>
+        <li>별도 API 결제 없이 기존 Claude 구독 인증 재사용 가능</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>빠른 시작</h2>
+      <pre><code>git clone https://github.com/sorokangel-oss/auto.git
+cd auto
+pip install -r requirements.txt
+playwright install chromium
+cp .env.example .env   # 네이버/Claude 인증 정보 입력
+python main.py login
+python main.py post-now --topic "오늘의 추천 주제"</code></pre>
+    </div>
+
+    <a class="btn" href="https://github.com/sorokangel-oss/auto" target="_blank" rel="noopener">
+      GitHub에서 코드 보기 →
+    </a>
+
+    <footer>
+      이 페이지는 프로젝트 소개용 정적 페이지입니다. 자세한 설치·사용법은
+      저장소의 <a href="https://github.com/sorokangel-oss/auto/blob/main/README.md" target="_blank" rel="noopener">README</a>를 참고하세요.
+    </footer>
+  </div>
+</body>
+</html>
