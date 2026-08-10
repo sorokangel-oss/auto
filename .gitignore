@@ -1,0 +1,8 @@
+.env
+storage/*.json
+storage/*.png
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log
