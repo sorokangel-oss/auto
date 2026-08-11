@@ -1,0 +1,10 @@
+# 이 저장소는 파이썬 프로젝트(main.py, src/ 등)와 정적 페이지(index.html)가
+# 함께 있어, Netlify가 별도 빌드 도구(Node/Python)를 자동 감지해 build error를
+# 낼 수 있다. 아래 설정으로 빌드 명령을 아예 실행하지 않고 저장소 루트를
+# 그대로 정적 사이트로 배포하도록 고정한다.
+[build]
+  command = ""
+  publish = "."
+
+[build.environment]
+  NETLIFY_USE_YARN = "false"
