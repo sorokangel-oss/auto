@@ -1,7 +1,11 @@
-# 이 저장소는 파이썬 프로젝트(main.py, src/ 등)와 정적 페이지(index.html)가
-# 함께 있어, Netlify가 별도 빌드 도구(Node/Python)를 자동 감지해 build error를
-# 낼 수 있다. command 키를 아예 생략해 빌드 단계 자체를 건너뛰고 저장소 루트를
-# 그대로 정적 사이트로 배포한다. (command = "" 처럼 빈 문자열로 두면 Netlify가
-# "빈 커맨드"를 실행하려다 실패하는 경우가 있어, 키 자체를 없앤다.)
+# 이 저장소는 순수 정적 페이지(index.html)라 빌드가 필요 없다.
+#
+# 주의: command 키를 아예 생략하면, Netlify 사이트 대시보드(Site settings ->
+# Build & deploy -> Build command)에 예전에 설정된 값이 그대로 적용된다.
+# 이 저장소의 경우 UI 쪽에 남아있던 "hugo" 명령이 그대로 실행되어
+# `hugo: command not found` 에러가 발생했다 (commandOrigin: ui).
+# 그래서 아무 것도 하지 않는 안전한 명령(`true`)을 명시적으로 지정해
+# UI에 남아있는 값을 확실히 덮어쓴다.
 [build]
+  command = "true"
   publish = "."
